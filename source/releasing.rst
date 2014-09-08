@@ -8,7 +8,8 @@ so Linux users are not provided with an executable program.
 
 We generate releases from the *master* branch.
 Therefore, before starting the release process,
-make sure that all changes to *master* have been committed.
+make sure that all changes to *master* have been committed
+and pushed to the GitHub repository.
 
 
 Update changes.rst
