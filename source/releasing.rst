@@ -199,3 +199,28 @@ you may have a virtual box running Windows.
    *bamm-<version>-Windows.zip*.
 
 #. Upload this compressed file somewhere online that can be accessed by anyone.
+
+
+Update the website
+------------------
+
+Once both the Mac OS X and Windows compressed files have been uploaded online,
+the website needs to be updaded to allow users to download these files.
+
+#. Open *doc/source/download.rst*.
+
+#. We want to keep links to the previous versions of BAMM,
+   so copy those links and paste them in the *Previous Versions* section.
+
+#. Update the links to the new versions of BAMM.
+
+#. Save these changes and *make* the documentation
+   to make sure that the links work.
+
+#. Commit and push these changes::
+
+       git commit -am "Doc: Update download links for version 2.2.0"
+       git push
+
+#. Follow the steps in :ref:`upload_doc` to
+   update the online documentation with the new changes.
