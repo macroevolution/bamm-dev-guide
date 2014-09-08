@@ -137,28 +137,26 @@ This will allow users with OS X 10.7.5 or greater run the executable.
 Windows
 -------
 
-To create an executable for Windows, BAMM must be compiled on Windows
-(Windows 7 and above) using Visual Studio (e.g., Visual Studio Express 13).
+To create an executable for Windows, BAMM must be compiled on Windows 7
+using Visual Studio (e.g., Visual Studio Express 13).
 Rather than having a separate computer running Windows,
 you may have a virtual box running Windows.
 
-#. Open the command-line terminal
+#. In Windows, open the command-line terminal
    (Click on Start, then search for "cmd").
 
-#. If you do not have BAMM downloaded from github, do so now
+#. If you do not have BAMM downloaded from GitHub, do so now
    (the following instructions assume that BAMM
    is in a directory called ``bamm``).
+   Otherwise, update the local repository using ``git pull``.
 
 #. If you have a previous ``build`` directory, remove it::
 
        rmdir build /s /q
 
-#. Make sure your repository is updated (run ``git pull``),
-   then go to the correct commit entry for this release.
-   For example, if you are releasing version 2.1.0 and you have tagged it,
-   checkout that tag::
+#. Checkout the tagged version (e.g., v2.2.0) you would like to release::
 
-       git checkout v2.1.0
+       git checkout v2.2.0
 
 #. Create a new ``build`` directory and go into it::
 
@@ -169,23 +167,33 @@ you may have a virtual box running Windows.
 
        cmake -G"Visual Studio 12" ..
 
-#. Run Visual Studio Express 13.
+#. Run Visual Studio Express 13 and open the BAMM project
+   located in the ``build`` directory (called *BAMM*).
 
-#. Open the BAMM project located in the ``build`` directory.
+#. On the toolbar, change *Debug* to *Release*.
 
-#. On the toolbar, change "Debug" to "Release".
-
-#. On the right-hand panel, right-click on "bamm" and click on "Build".
+#. On the right-hand panel, right-click on *bamm* and click on *Build*.
+   If the build succeeded, a directory called *Release* will be created
+   within the *build* directory, containing the executable *bamm.exe* file.
 
 #. On the Desktop (or somewhere convenient),
-   create a new folder named "bamm-<version>",
+   create a new folder named *bamm-<version>-Windows*,
    where <version> is the release version of BAMM.
 
-#. Copy the ``bamm.exe`` file from the ``build\Release`` directory
-   into the new folder bamm-<version>.
+#. Copy the *bamm.exe* file from the *build\Release* directory
+   into the new folder *bamm-<version>-Windows*.
+   For example, if BAMM is located in *C:\\Users\\Auto\\bamm*
+   and you are in the *build* directory, you may copy *bamm.exe* as follows::
 
-#. *TODO: Say which DLL files are needed and where to get them*
+       copy Release\bamm.exe C:\Users\Auto\Desktop\bamm-2.2.0-Windows
 
-#. Compress this folder into a ZIP file.
+#. Copy the required *DLL* files from Visual Studio
+   to the *bamm-<version>-Windows* folder (these files are located in
+   *C:\\Program Files (x86)\\Microsoft Visual Studio 12.0\\VC\\redist\\x86\\Microsoft.VC120.CRT*).
 
-#. Upload this ZIP file somewhere that can be accessed by anyone.
+#. Right-click on the *bamm-<version>-Windows* folder,
+   select *Send to*, then *Compressed (zipped) folder*.
+   This will create a new file called
+   *bamm-<version>-Windows.zip*.
+
+#. Upload this compressed file somewhere online that can be accessed by anyone.
