@@ -1,5 +1,5 @@
-Releasing
-=========
+Release to the public
+=====================
 
 This chapter explains how to package the BAMM executable program
 for Mac OS X and Windows, so that users can download it from the website.
@@ -12,8 +12,8 @@ make sure that all changes to *master* have been committed
 and pushed to the GitHub repository.
 
 
-Update changes.rst
-------------------
+Update the file changes.rst
+---------------------------
 
 Important changes from one release to another
 are documented in *doc/source/changes.rst*,
@@ -35,8 +35,8 @@ Generate the HTML documentation and make sure the new change entry looks OK.
 If everything looks good, commit the new changes to the repository.
 
 
-Update version number
----------------------
+Update the version number
+-------------------------
 
 Each BAMM release should have its own version number.
 This version number is displayed every time BAMM is run
@@ -76,8 +76,8 @@ so you must run the following command to push them::
     git push --tags
 
 
-Mac OS X
---------
+Package for Mac OS X
+--------------------
 
 To create an executable file for Mac OS X,
 BAMM must be compiled on a 64-bit computer with Mac OS X 10.7.5.
@@ -135,8 +135,8 @@ This will allow users with OS X 10.7.5 or greater run the executable.
 #. Upload this compressed file somewhere online that can be accessed by anyone.
 
 
-Windows
--------
+Package for Windows
+-------------------
 
 To create an executable for Windows, BAMM must be compiled on Windows 7
 using Visual Studio (e.g., Visual Studio Express 13).
