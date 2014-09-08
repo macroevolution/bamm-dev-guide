@@ -188,9 +188,10 @@ you may have a virtual box running Windows.
 
        copy Release\bamm.exe C:\Users\Auto\Desktop\bamm-2.2.0-Windows
 
-#. Copy the required *DLL* files from Visual Studio
-   to the *bamm-<version>-Windows* folder (these files are located in
-   *C:\\Program Files (x86)\\Microsoft Visual Studio 12.0\\VC\\redist\\x86\\Microsoft.VC120.CRT*).
+#. Copy all the *DLL* files
+   (i.e., *msvcp120.dll*, *msvcr120.dll*, and *vccorlib120.dll*) from
+   *C:\\Program Files (x86)\\Microsoft Visual Studio 12.0\\VC\\redist\\x86\\Microsoft.VC120.CRT*
+   to the *bamm-<version>-Windows* folder.
 
 #. Right-click on the *bamm-<version>-Windows* folder,
    select *Send to*, then *Compressed (zipped) folder*.
