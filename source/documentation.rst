@@ -1,3 +1,5 @@
+.. _documentation:
+
 Update the documentation
 ========================
 
@@ -67,8 +69,6 @@ As you add or edit content to the documentation,
 build the documentation often to check your work
 before uploading it online.
 
-
-.. _upload_doc:
 
 Upload online
 -------------

@@ -222,5 +222,5 @@ the website needs to be updaded to allow users to download these files.
        git commit -am "Doc: Update download links for version 2.2.0"
        git push
 
-#. Follow the steps in :ref:`upload_doc` to
+#. Follow the steps in :ref:`documentation` to
    update the online documentation with the new changes.
