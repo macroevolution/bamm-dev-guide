@@ -7,14 +7,18 @@ This chapter explains how to update BAMM's documentation,
 including editing existing content, adding new content,
 converting the documentation to HTML,
 and finally uploading it online to `<http://bamm-project.org>`_.
+The documentation is located in the *doc* directory of BAMM's root directory.
+Most of the actual text of the documentation
+is located within the *doc/source* directory.
+
 BAMM's documentation was created using `Sphinx <http://sphinx-doc.org/>`_.
 Sphinx is a tool that allows you to write documentation
 in an easy-to-type format
 (`reStructuredText <http://sphinx-doc.org/rest.html>`_),
 and then convert it into HTML so it may be viewed as a website.
-The documentation is located in the *doc* directory of BAMM's root directory.
-Most of the actual text of the documentation
-is located within the *doc/source* directory.
+Therefore, you need to install Sphinx on your computer
+before following the instructions in this chapter
+(see `Installing Sphinx <http://sphinx-doc.org/install.html>`_).
 
 
 Edit existing content
