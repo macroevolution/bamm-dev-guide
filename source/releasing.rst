@@ -101,35 +101,16 @@ This will allow users with OS X 10.7.5 or greater run the executable.
        mkdir build
        cd build
 
-#. For releases, BAMM must be built using Xcode.
-   Create an Xcode project automatically using CMake::
+#. Run CMake, specifying *clang++* as the compiler::
 
-       cmake -GXcode ..
+       cmake -DCMAKE_CXX_COMPILER=clang++ ..
 
-#. Open the project in Xcode from the command-line::
+#. Run *make* in parallel to compile BAMM::
 
-       open BAMM.xcodeproj
+       make -j
 
-#. Click on *BAMM* in the left-hand side panel of Xcode.
-   Options will appear in the center panel.
+#. Compress the executable for distribution::
 
-#. To the left of the center panel, there is a list under the *TARGET* heading
-   (*ALL_BUILD*, *ZERO_CHECK*, *bamm*, *install*, and *package*).
-   Click on *bamm*.
-
-#. In the panel with options, scroll down to a section called
-   *Apple LLVM compiler 4.2 - Language*.
-   Find the option *C++ Standard Library* and change its value
-   from *Compiler Default* to *libc++*.
-
-#. In the menu, select *Project*, then click on *Build*.
-
-#. If the build succeeded, a directory called *Debug* will be created
-   within the *build* directory, containing the executable *bamm* file.
-
-#. Go into the *Debug* directory and compress the executable for distribution::
-
-       cd Debug
        tar -czf bamm-2.2.0-MacOSX.tar.gz bamm
 
 #. Upload this compressed file somewhere online that can be accessed by anyone.
