@@ -4,34 +4,87 @@ Software Design
 This chapter describes the main classes in BAMM and how they interact.
 It also explains how to extend BAMM through the inheritance of classes.
 
+
+MetropolisCoupledMCMC
+---------------------
+
+This class class is responsible
+for creating the desired number of Markov chains in the analysis.
+It is also responsible for iterating each chain
+and swapping their temperatures accordingly.
+As each chain is iterated, the appropriate data writer is used
+to output the specific model's data.
+
+
+MCMC
+----
+
+This class is responsible for iterating a single chain
+a given number of steps (or generations).
+At each iteration, a new state for the model is proposed.
+The acceptance ratio is obtained from the model,
+and with a probability equal to the acceptance ratio,
+the proposal is accepted; otherwise, it is rejected.
+This process is implemented in the ``MCMC::step()`` method::
+
+    void MCMC::step()
+    {
+        _model->proposeNewState();
+
+        double acceptanceRatio = _model->acceptanceRatio();
+        if (_random.trueWithProbability(acceptanceRatio)) {
+            _model->acceptProposal();
+        } else {
+            _model->rejectProposal();
+        }
+    }
+
+The *MCMC* class is also responsible for creating
+the specific model to be used by the chain.
+The type of the model cannot be specified directly
+to the *MCMC* class because there are different model types
+(e.g., diversification and phenotypic evolution).
+Instead, *MCMC* relies on a *model factory* object
+to create the correct model type.
+
+
+ModelFactory
+------------
+
+This class is responsible for creating
+the specific model (and related objects) used in the analysis.
+*ModelFactory* is subclassed (it must be because it is abstract),
+and its virtual method ``createModel(...)`` is implemented
+in order to return the correct model type.
+For example, the *SpExModelFactory* class
+implements ``createModel(...)`` as follows::
+
+    Model* SpExModelFactory::createModel
+        (Random& random, Settings& settings) const
+    {
+        return new SpExModel(random, settings);
+    }
+
+Note that the return type of ``createModel(...)`` is a *Model*
+and not a specific type of model (e.g., *TraitModel*).
+This allows the *MCMC* class to treat all models the same,
+without knowledge of the specific type of model at hand.
+
+*ModelFactory*'s other virtual methods are also implemented accordingly.
+
+
 Model
 -----
 
 The *Model* class represents the shift configuration
 that will be updated by a Markov chain.
-In each iteration of the chain,
-a new state for the model is proposed.
-The acceptance ratio is obtained from the model,
-and with a probability equal to the acceptance ratio,
-the proposal is accepted; otherwise, it is rejected.
-The method ``MCMC::step()`` implements this clearly::
-
-    _model->proposeNewState();
-
-    double acceptanceRatio = _model->acceptanceRatio();
-    if (_random.trueWithProbability(acceptanceRatio)) {
-        _model->acceptProposal();
-    } else {
-        _model->rejectProposal();
-    }
-
 The *Model* class is abstract;
 that is, an object of type *Model* cannot be constructed.
-Instead, the *Model* class must be subclassed
-and its virtual methods must be implemented by the subclass.
+Instead, the *Model* class is subclassed
+and its virtual methods are implemented by the subclass.
 For example, the classes *SpExModel* and *TraitModel*
 are subclasses of the *Model* class.
-The virtual methods that must be implemented are destribed below.
+The virtual methods that are implemented are destribed below.
 
 ``double computeLogLikelihood()``
     Computes and returns the log-likelihood of the model.
@@ -68,8 +121,9 @@ knows about a specific type of branch event (a subclass of *BranchEvent*).
 For example, *SpExModel* knows about the parameters in *SpExBranchEvent*.
 
 In addition, the constructor of the *Model* subclass
-should add the specific proposals it can respond to.
-Follow the principles implemented in *SpExModel* and *TraitModel*.
+adds the specific proposals it can respond to.
+Follow the principles implemented in *SpExModel* and *TraitModel*
+to create a new type of model.
 
 
 BranchEvent
@@ -92,9 +146,9 @@ Proposal
 --------
 
 The *Proposal* class represents a proposed change to the model.
-It has several pure virtual methods that must be implemented by its subclasses;
-therefore, *Proposal* cannot be instantiated---it is an *abstract* class.
-The methods that must be implemented and their descriptions are given below.
+It has several pure virtual methods that are implemented by its subclasses.
+*Proposal* cannot be instantiated---it is an *abstract* class.
+The virtual methods and their descriptions are given below.
 
 ``void propose()``
     Changes the model object with the proposed change
@@ -115,8 +169,8 @@ The methods that must be implemented and their descriptions are given below.
 The *Proposal* class also has the non-virtual method ``double weight()``,
 which simply returns the value of an internal variable called ``_weight``.
 This *weight* represents the update rate of the proposal.
-In the subclass's constructor, the ``_weight`` variable
-should be assigned an actual weight, most likely from the *Settings* object.
+In each subclass's constructor, the ``_weight`` variable
+is assigned an actual weight from the *Settings* object.
 
 For an example of a class implementing these methods,
 see the *EventNumberProposal* class.
@@ -135,8 +189,6 @@ and implements most of the algorithm
 to change an event's parameter value.
 However, this class contains virtual methods
 that deal specifically with the parameter they change.
-To create a new proposal that changes an event's parameter value,
-subclass from *EventParameterProposal* and implement its virtual methods.
 These virtual methods are described below.
 
 ``double getCurrentParameterValue()``
@@ -155,5 +207,7 @@ These virtual methods are described below.
 ``void updateParameterOnTree()``
     Call the appropriate methods to update the model parameters on the tree.
 
+To create a new proposal that changes an event's parameter value,
+subclass from *EventParameterProposal* and implement its virtual methods.
 For an example of a class implementing these methods,
 see the *LambdaInitProposal* class.
