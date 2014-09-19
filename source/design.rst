@@ -1,5 +1,8 @@
-Changes from original
-=====================
+Software Design
+===============
+
+This chapter describes the main classes in BAMM and how they interact.
+It also explains how to extend BAMM through the inheritance of classes.
 
 Model
 -----

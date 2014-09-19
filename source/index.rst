@@ -9,6 +9,6 @@ Welcome to BAMM Developer's Guide's documentation!
 .. toctree::
    :maxdepth: 2
 
-   changes
+   design
    documentation
    releasing
