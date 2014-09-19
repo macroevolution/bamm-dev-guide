@@ -211,3 +211,30 @@ To create a new proposal that changes an event's parameter value,
 subclass from *EventParameterProposal* and implement its virtual methods.
 For an example of a class implementing these methods,
 see the *LambdaInitProposal* class.
+
+
+ModelDataWriter
+---------------
+
+This class is responsible for writing model data to output files.
+Because different kinds of models require different kinds of output,
+it is subclassed by *SpExDataWriter* and *TraitDataWriter*.
+Output that is shared among all model types (e.g., *mcmc_out.txt*)
+is implemented in the *ModelDataWriter* class itself
+(using helper classes, such as *MCMCDataWriter*).
+Code for specific output is implemented in a specific subclass.
+For example, node state data is applicable only to *TraitModel*,
+so the *TraitDataWriter* (derived from *ModelDataWriter*) writes this data
+(using the helper class *NodeStateDataWriter*)::
+
+    void TraitDataWriter::writeData(int generation, Model& model)
+    {
+        ModelDataWriter::writeData(generation, model);
+        _eventDataWriter.writeData(generation, model);
+        _nodeStateDataWriter.writeData(generation,
+            static_cast<TraitModel&>(model));
+    }
+
+The cast from *Model* to *TraitModel* is necessary
+because *NodeStateDataWriter*'s *writeData* method
+takes in the specific *TraitModel*.
