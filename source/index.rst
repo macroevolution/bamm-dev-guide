@@ -10,5 +10,6 @@ Welcome to BAMM Developer's Guide's documentation!
    :maxdepth: 2
 
    design
+   add_model
    documentation
    releasing
