@@ -396,3 +396,85 @@ and add the *alphaInit* setting.
 You should now be able to run BAMM with this control file.
 However, the event data file is not written
 because we have not specified which parameters to output.
+
+
+Subclass from EventDataWriter
+-----------------------------
+
+The *EventDataWriter* class is responsible for writing to a file
+information about each event in the tree.
+It is an abstract class because some event data is specific to the model.
+*EventDataWriter* handles writing out (at each generation desired)
+the generation, the left and right species whose common ancestor
+defines the location of the event, and the absolute time of the event.
+A subclass of *EventDataWriter* needs to implement the
+``specificHeader()`` method and the ``eventParameters(...)`` method.
+In ``specificHeader()``, return any additional header information
+for any parameters that are specific to the model.
+In ``eventParameters(...)``, return the specific parameter value
+from the event that is passed to it.
+Below is the header file for a sample subclass of *EventDataWriter*::
+
+
+    #ifndef MY_EVENT_DATA_WRITER_H
+    #define MY_EVENT_DATA_WRITER_H
+
+    #include "EventDataWriter.h"
+    #include <string>
+
+    class Settings;
+    class BranchEvent;
+
+    class MyEventDataWriter : public EventDataWriter
+    {
+    public:
+
+        MyEventDataWriter(Settings& settings);
+        virtual ~MyEventDataWriter();
+
+    private:
+
+        virtual std::string specificHeader();
+        virtual std::string eventParameters(BranchEvent* event);
+    };
+
+    #endif
+
+The implementation is as follows::
+
+    #include "MyEventDataWriter.h"
+    #include "EventDataWriter.h"
+    #include "MyBranchEvent.h"
+
+    #include <sstream>
+
+    class Settings;
+    class BranchEvent;
+
+    MyEventDataWriter::MyEventDataWriter(Settings& settings) :
+        EventDataWriter(settings)
+    {
+    }
+
+    MyEventDataWriter::~MyEventDataWriter()
+    {
+    }
+
+    std::string MyEventDataWriter::specificHeader()
+    {
+        return ",alpha";
+    }
+
+
+    std::string MyEventDataWriter::eventParameters(BranchEvent* event)
+    {
+        MyBranchEvent* specificEvent = static_cast<MyBranchEvent*>(event);
+
+        std::ostringstream stringStream;
+        stringStream << specificEvent->alpha();
+        return stringStream.str();
+    }
+
+If you compile and run BAMM using the control file described above,
+you will see the *event_data.txt* file being produced.
+It will contain the *alpha* parameter as part of its output.
