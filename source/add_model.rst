@@ -395,4 +395,4 @@ Then, erase any setting that is related to the diversification model
 and add the *alphaInit* setting.
 You should now be able to run BAMM with this control file.
 However, the event data file is not written
-because we have not specified what parameters to output.
+because we have not specified which parameters to output.
