@@ -73,6 +73,9 @@ As you add or edit content to the documentation,
 build the documentation often to check your work
 before uploading it online.
 
+To change the text that appears in the tab of the web browser, modify the text in *index.html*
+and make the modification in line 9.
+
 
 Upload online
 -------------
