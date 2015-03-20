@@ -36,6 +36,9 @@ Edit existing content
    We created a basic *rst* template file (called *template.rst*)
    in the *doc/source* directory to help you remember the most common commands.
 
+#. If the BAMM version is changing, open *conf.py* and update *version* and *release*.
+   This will update the text that appears in the top of the web browser on bamm-project.org. 
+
 
 Add new content
 ---------------
@@ -72,9 +75,6 @@ To view the website, open the file *build/html/index.html* in a browser::
 As you add or edit content to the documentation,
 build the documentation often to check your work
 before uploading it online.
-
-To change the text that appears in the tab of the web browser, modify the text in *index.html*
-and make the modification in line 9.
 
 
 Upload online
