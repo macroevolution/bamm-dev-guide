@@ -112,7 +112,8 @@ when they access BAMM'S website (`<http://bamm-project.org>`_).
    There may be other files or directories left over
    from another branch that were not committed. Delete these, too.
    Check which files these are with ``git status``
-   and look at the *Untracked files*.
+   and look at the *Untracked files*. All that should remain is the doc
+   directory and the CNAME file.
 
    If you accidentally delete the *CNAME* file, get it back with::
 
